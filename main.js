@@ -396,7 +396,7 @@ function pAttack(p1, p2) {
                 clearInterval(timer);
                 return 0;
             }
-            console.log('CP:', Math.round(p2.stats.curCp) + '/' + p2.stats.maxCp, 'HP:', Math.round(p2.stats.curHp) + '/' + p2.stats.maxHp, 'Dmg:', Math.round(damageis));
+            console.log('CP: ' + Math.round(p2.stats.curCp) + '/' + p2.stats.maxCp, 'HP: ' + Math.round(p2.stats.curHp) + '/' + p2.stats.maxHp + '  Damage:' + Math.round(damageis));
             //console.log(damageis); //+ нанес столько урона, p2.hp=, p2.cp=, dead
             
             
