@@ -376,12 +376,7 @@ function damage(p1, p2) {
     //critical damage boosts
     //Deflect Arrow/Blunt Weakness/etc	(Weapon Damage)*(Resistance Multiplier)
     
-    
-    
-    console.log(hit * ((p1.stats.pAtk * 70 * cd * cdBonus * ss * ssBonus * pvpBonus)/(p2.stats.sDef+p2.stats.pDef)));
     dmg = hit * ((p1.stats.pAtk * 70 * cd * cdBonus * ss * ssBonus * pvpBonus)/(p2.stats.sDef+p2.stats.pDef)); 
-    console.log(dmg);
-    
     return {dmg: dmg, critHit: cd};
 }
 
@@ -414,9 +409,7 @@ function pAttack(p1, p2) {
                 critmsg=' - Critical Hit!';
             } else {critmsg='';}
             
-            console.log('CP: ' + Math.round(p2.stats.curCp) + '/' + p2.stats.maxCp, 'HP: ' + Math.round(p2.stats.curHp) + '/' + p2.stats.maxHp + '  Damage:' + Math.round(damageis) + critmsg);
-            //console.log(damageis); //+ нанес столько урона, p2.hp=, p2.cp=, dead
-            
+            console.log('CP: ' + Math.round(p2.stats.curCp) + '/' + p2.stats.maxCp, 'HP: ' + Math.round(p2.stats.curHp) + '/' + p2.stats.maxHp + '  Damage:' + Math.round(damageis) + critmsg);    
             
             
         }, tim); //pAtkSpd/500 - кол-во ударов в секунду
