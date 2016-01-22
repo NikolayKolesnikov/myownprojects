@@ -275,6 +275,13 @@ function damage(p1, p2) {
         } else {ss=1;}
     //рассчет крит или нет по шансу, добавить если одето оружие и парное - 2.04
     var cd;
+    //считывает рейт по процентам
+    //
+    //
+    //
+    //нужен нормальный рассчет шанса крита
+    //
+    //
     if((Math.random() * (100 - 0) + 0)<p1.stats.critRate){
         cd = 2;
     } else {cd = 1;}
@@ -369,8 +376,13 @@ function damage(p1, p2) {
     //critical damage boosts
     //Deflect Arrow/Blunt Weakness/etc	(Weapon Damage)*(Resistance Multiplier)
     
+    
+    
+    console.log(hit * ((p1.stats.pAtk * 70 * cd * cdBonus * ss * ssBonus * pvpBonus)/(p2.stats.sDef+p2.stats.pDef)));
     dmg = hit * ((p1.stats.pAtk * 70 * cd * cdBonus * ss * ssBonus * pvpBonus)/(p2.stats.sDef+p2.stats.pDef)); 
-    return dmg;
+    console.log(dmg);
+    
+    return {dmg: dmg, critHit: cd};
 }
 
 function pAttack(p1, p2) {
@@ -383,20 +395,26 @@ function pAttack(p1, p2) {
             tim=1000/((p1.stats.pAtkSpd/500)*(1500/delay));
         } else {tim=1000/(p1.stats.pAtkSpd/500);}
         var timer = setInterval(function(){
-            damageis = damage(p1,p2);
+            var damageObj = damage(p1,p2);
+            var damageis = damageObj.dmg;
             if(damageis<p2.stats.curCp) {
                 p2.stats.curCp=p2.stats.curCp - damageis;
             } else {
-                damageis = damageis-p2.stats.curCp;
+                p2.stats.curHp=p2.stats.curHp-(damageis-p2.stats.curCp);
                 p2.stats.curCp=0;
-                p2.stats.curHp=p2.stats.curHp-damageis;
             }
             if(p2.stats.curHp <= 0) {
                 console.log('Last hit:',Math.round(damageis)+'dmg', '|', p2.name, 'dead!');
                 clearInterval(timer);
                 return 0;
             }
-            console.log('CP: ' + Math.round(p2.stats.curCp) + '/' + p2.stats.maxCp, 'HP: ' + Math.round(p2.stats.curHp) + '/' + p2.stats.maxHp + '  Damage:' + Math.round(damageis));
+            //сообщение о крите, если крит
+            var critmsg='';
+            if(damageObj.critHit>1) {
+                critmsg=' - Critical Hit!';
+            } else {critmsg='';}
+            
+            console.log('CP: ' + Math.round(p2.stats.curCp) + '/' + p2.stats.maxCp, 'HP: ' + Math.round(p2.stats.curHp) + '/' + p2.stats.maxHp + '  Damage:' + Math.round(damageis) + critmsg);
             //console.log(damageis); //+ нанес столько урона, p2.hp=, p2.cp=, dead
             
             
